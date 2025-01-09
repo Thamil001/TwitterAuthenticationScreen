@@ -71,99 +71,18 @@ fun TwitterSignUpScreen(navController: NavHostController, auth: FirebaseAuth) {
             textAlign = TextAlign.Center,
         ), color = MaterialTheme.colorScheme.onPrimary)
         Spacer(modifier = Modifier.weight(0.1f))
-        BasicTextField(
+        InputField(
+            label = "Email",
             value = email,
-            onValueChange = { email = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(76.dp)
-                .padding(5.dp)
-                .padding(horizontal = 32.dp)
-                .clip(shape = RoundedCornerShape(32.dp))
-                .onFocusChanged { focusState -> isFocusedName = focusState.isFocused }
-                .background(Color.White),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.titleLarge.copy(Color.Black),
-            visualTransformation = VisualTransformation.None,
-            cursorBrush = SolidColor(Color.Black),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
-            ),
-            decorationBox = { innerTextField ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 24.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if(email.isEmpty() && !isFocusedName){
-                            Text(text="Email", style = TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontStyle = FontStyle.Normal,
-                                fontFamily = FontFamily.SansSerif,
-                                textAlign = TextAlign.Center,
-                            ), color = MaterialTheme.colorScheme.outline)
-                        }
-                        innerTextField()
-                    }
-
-                }
-            }
+            onValueChange = { email = it }
         )
-        Spacer(modifier = Modifier.weight(0.02f))
-        BasicTextField(
+        Spacer(modifier = Modifier.height(10.dp))
+        InputField(
+            label = "Name",
             value = name,
-            onValueChange = { name= it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(76.dp)
-                .padding(5.dp)
-                .padding(horizontal = 32.dp)
-                .clip(shape = RoundedCornerShape(32.dp))
-                .onFocusChanged { focusState -> isFocusedEmail = focusState.isFocused }
-                .background(Color.White),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.titleLarge.copy(Color.Black),
-            visualTransformation = VisualTransformation.None,
-            cursorBrush = SolidColor(Color.Black),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
-            ),
-            decorationBox = { innerTextField ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 24.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        innerTextField()
-                        if(name.isEmpty() && !isFocusedEmail){
-                            Text(text="Full name", style = TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontStyle = FontStyle.Normal,
-                                fontFamily = FontFamily.SansSerif,
-                                textAlign = TextAlign.Center,
-                            ), color = MaterialTheme.colorScheme.outline)
-                        }
-                    }
-                }
-            }
+            onValueChange = {name=it}
         )
-        Spacer(modifier = Modifier.weight(0.2f))
+        Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
                 if(email.isNotEmpty()&&name.isNotEmpty()){
@@ -223,6 +142,66 @@ fun TwitterSignUpScreen(navController: NavHostController, auth: FirebaseAuth) {
         }
         Spacer(modifier = Modifier.weight(0.9f))
 
+    }
+}
+
+@Composable
+fun InputField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit
+){
+    var isFocused by remember { mutableStateOf(false) }
+    Column(modifier=Modifier
+        .fillMaxWidth())
+    {
+
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(76.dp)
+                .padding(5.dp)
+                .padding(horizontal = 32.dp)
+                .clip(shape = RoundedCornerShape(32.dp))
+                .onFocusChanged { focusState -> isFocused = focusState.isFocused }
+                .background(Color.White),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.titleLarge.copy(Color.Black),
+            visualTransformation = VisualTransformation.None,
+            cursorBrush = SolidColor(Color.Black),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done
+            ),
+            decorationBox = { innerTextField ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 24.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        if(value.isEmpty() && !isFocused){
+                            Text(text=label, style = TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Medium,
+                                fontStyle = FontStyle.Normal,
+                                fontFamily = FontFamily.SansSerif,
+                                textAlign = TextAlign.Center,
+                            ), color = MaterialTheme.colorScheme.outline)
+                        }
+                        innerTextField()
+                    }
+
+                }
+            }
+        )
     }
 }
 

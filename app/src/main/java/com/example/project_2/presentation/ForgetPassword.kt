@@ -59,56 +59,19 @@ fun ForgetPassword(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.weight(1f))
-        Image(painter = painterResource(id = R.drawable.twitter), contentDescription = "")
-        Spacer(modifier = Modifier.weight(1f))
-        BasicTextField(value = email,
-            onValueChange = { email = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(76.dp)
-                .padding(5.dp)
-                .padding(horizontal = 32.dp)
-                .clip(shape = RoundedCornerShape(32.dp))
-                .onFocusChanged { focusState -> isFocusedName = focusState.isFocused }
-                .background(Color.White),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.titleLarge.copy(Color.Black),
-            visualTransformation = VisualTransformation.None,
-            cursorBrush = SolidColor(Color.Black),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
-            ),
-            decorationBox = { innerTextField ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 24.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (email.isEmpty() && !isFocusedName) {
-                            Text(
-                                text = "Email", style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    fontStyle = FontStyle.Normal,
-                                    fontFamily = FontFamily.SansSerif,
-                                    textAlign = TextAlign.Center,
-                                ), color = MaterialTheme.colorScheme.outline
-                            )
-                        }
-                        innerTextField()
-                    }
 
-                }
-            }
+        Image(painter = painterResource(id = R.drawable.twitter), contentDescription = "")
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        InputField(
+            label = "Email",
+            value = email,
+            onValueChange = { email = it }
         )
-        Spacer(modifier = Modifier.weight(0.1f))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         Button(
             onClick = {
                 if (email.isNotBlank() && emailCheck(email)){
@@ -138,7 +101,9 @@ fun ForgetPassword(
                 ), color = MaterialTheme.colorScheme.primary
             )
         }
+
         Spacer(modifier = Modifier.weight(2f))
+
         Text(
             text = statusMessage, style = TextStyle(
                 fontSize = 21.sp,
